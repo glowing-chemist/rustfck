@@ -1,0 +1,51 @@
+, Read width into memory 0
+[->+>+<<] Move width into memories 1 and 2
+>>>, Read height into memory 3
+[->+>+<<] Move height to memories 4 and 5
+
+>[- For every point of height
+<<<[->>>>>+<<<<<] Add the width into memory 6
+>[-<+<+>>] Copy memory 2 into 0 and 1
+<<[->>+<<] Copy memory 0 into 2
+>>>>] Put pointer at memory 4
+This multiplies height and width to put the number of pixels in memory 6
+>>[->+>+<<] Move numPixels to memories 7 and 8
+>> Go to memory 8
+
+[ For every pixel
+>, Read a byte of input
+<[->>>+<<<]>>>- Decrement the pixel counter and move it forward 3 memory spaces
+<<<<[->>>+<<<]>>> Move numPixels up 3 memory spaces (important to keep track to go back to beginning of array later)
+> 
+]
+Pixel data is stored in memories 9 12 15 18 etc
+Pointer is at memory 8 plus 3N
+numPixels is at memory 7 plus 3N
+<  Go to N in memory
+[ While there are pixels
+[-<<+<+>>>] Move N back 3 memory spaces
+<<<- Decrement the counter
+] Pointer is back to memory 7
+
+<<<<<. Go to memory 2 and print the width
+>>>. Go to memory 5 and print the height
+>>> Go to memory 8
+[ While there is a pixel in the next memory space
+< Go to an empty spot in memory two behind the pixel
+++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++ Put 128 there
+[- Subtract 128 from the pixel
+>>[ Check if the pixel value hits 0 during the subtraction
+->>>+<<] If not then decrement and go to next memory spot (empty)
+>[<] Make sure pointer is one spot ahead of the pixel in memory
+<<<] Go back to where 128 was
+>> Go to pixel
+[ If pixel is positive then we want to print 255
+[-]-> Set to 0 and then subtract one to get 255
+]
+>[<] Put pointer at the empty space in front of pixel
+<. Go to pixel and print
+>> Go on to next pixel
+] Done
